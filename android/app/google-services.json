@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1039638710892",
+    "project_id": "let-s-buy-8700a",
+    "storage_bucket": "let-s-buy-8700a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1039638710892:android:80cc5c4b5d338abc7e2649",
+        "android_client_info": {
+          "package_name": "com.example.lets_buy"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCcDlkUw0cBEAJXTd9gLXkrSrDsbUD1A4k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
