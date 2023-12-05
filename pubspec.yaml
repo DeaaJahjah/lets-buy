@@ -60,6 +60,9 @@ dependencies:
   currency_picker: ^2.0.3
   show_up_animation: ^2.0.0
   pin_code_fields: ^7.4.0
+  image_network: ^2.5.4+1
+  photo_view: ^0.14.0
+  widget_zoom: ^0.0.2
   
 
   flutter_svg: 

@@ -16,10 +16,7 @@ class PostDbService {
   }
 
   Future<List<Post>> similerStuff(String category) async {
-    var query = await _db
-        .collection('posts')
-        .where('category1', isEqualTo: category)
-        .get();
+    var query = await _db.collection('posts').where('category1', isEqualTo: category).get();
 
     List<Post> posts = [];
     for (var doc in query.docs) {
@@ -30,18 +27,14 @@ class PostDbService {
 
   List<Post> _projectListFromSnapshot(QuerySnapshot snapshot) {
     return snapshot.docs.map((doc) {
-      //print(doc.data);
+      // print(doc.data);
       return Post.fromFirestore(doc);
     }).toList();
   }
 
   Stream<List<Post>> getPostsByCategory(String category) {
     if (category == 'الكل') {
-      return _db
-          .collection('posts')
-          .where('is_available', isEqualTo: true)
-          .snapshots()
-          .map(_projectListFromSnapshot);
+      return _db.collection('posts').where('is_available', isEqualTo: true).snapshots().map(_projectListFromSnapshot);
     }
     return _db
         .collection('posts')
@@ -52,10 +45,7 @@ class PostDbService {
   }
 
   Future<List<Post>> getPosts() async {
-    var query = await _db
-        .collection('posts')
-        .where('is_available', isEqualTo: true)
-        .get();
+    var query = await _db.collection('posts').where('is_available', isEqualTo: true).get();
 
     List<Post> posts = [];
     for (var doc in query.docs) {
@@ -77,8 +67,7 @@ class PostDbService {
     var uid = FirebaseAuth.instance.currentUser!.uid;
     List<Post> posts = [];
 
-    var query =
-        await _db.collection('posts').where('user_id', isEqualTo: uid).get();
+    var query = await _db.collection('posts').where('user_id', isEqualTo: uid).get();
 
     for (var doc in query.docs) {
       posts.add(Post.fromFirestore(doc));
@@ -98,8 +87,7 @@ class PostDbService {
 // my post count
   Future<int> myPostCount() async {
     var uid = FirebaseAuth.instance.currentUser!.uid;
-    var query =
-        await _db.collection('posts').where('user_id', isEqualTo: uid).get();
+    var query = await _db.collection('posts').where('user_id', isEqualTo: uid).get();
     return query.docs.length;
   }
 

@@ -42,7 +42,7 @@ class Post extends Equatable {
 
   factory Post.fromFirestore(DocumentSnapshot documentSnapshot) {
     Post post = Post.fromJson(documentSnapshot.data() as Map<String, dynamic>);
-
+    print(post.description);
     post.id = documentSnapshot.id;
     return post;
   }
@@ -50,18 +50,6 @@ class Post extends Equatable {
   Map<String, dynamic> toJson() => _$PostToJson(this);
 
   @override
-  List<Object?> get props => [
-        keywrds,
-        id,
-        userId,
-        address,
-        city,
-        category1,
-        category2,
-        description,
-        price,
-        symbol,
-        isAvailable,
-        photos
-      ];
+  List<Object?> get props =>
+      [keywrds, id, userId, address, city, category1, category2, description, price, symbol, isAvailable, photos];
 }

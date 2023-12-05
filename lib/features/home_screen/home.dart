@@ -243,6 +243,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   builder: (context, snapshot) {
                     if (snapshot.hasData) {
                       List<Post> posts = snapshot.data!;
+                      print(posts.length);
+
                       return GridView.builder(
                           itemCount: posts.length,
                           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -251,15 +253,17 @@ class _HomeScreenState extends State<HomeScreen> {
                             childAspectRatio: 0.6,
                             crossAxisSpacing: 2,
                           ),
-                          itemBuilder: (context, i) => ProductCard(
-                                postId: posts[i].id!,
-                                imageProduct: (posts[i].photos!.isNotEmpty) ? posts[i].photos!.first : null,
-                                address: posts[i].address,
-                                isFavorite: userModel!.isFavouritePost(posts[i].id!),
-                                type: posts[i].city,
-                                price: posts[i].price,
-                                productStatus: posts[i].productStatus,
-                              ));
+                          itemBuilder: (context, i) {
+                            return ProductCard(
+                              postId: posts[i].id!,
+                              imageProduct: (posts[i].photos!.isNotEmpty) ? posts[i].photos!.first : null,
+                              address: posts[i].address,
+                              isFavorite: userModel!.isFavouritePost(posts[i].id!),
+                              type: posts[i].city,
+                              price: posts[i].price,
+                              productStatus: posts[i].productStatus,
+                            );
+                          });
                     }
                     if (snapshot.connectionState == ConnectionState.waiting) {
                       return const Center(

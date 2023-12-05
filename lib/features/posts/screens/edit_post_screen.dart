@@ -237,20 +237,25 @@ class _EditPostScreenState extends State<EditPostScreen> {
               ),
             ],
           ),
+          const SizedBox(height: 10),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              DropDownCustom(
-                categories: category1,
-                selectedItem: selectedCategory1,
-                onChanged: (String? newValue) {
-                  setState(() {
-                    selectedCategory1 = newValue!;
-                    selectedCategory2 = categories[selectedCategory1]!.first;
-                  });
-                },
+              Expanded(
+                flex: 1,
+                child: DropDownCustom(
+                  categories: category1,
+                  selectedItem: selectedCategory1,
+                  onChanged: (String? newValue) {
+                    setState(() {
+                      selectedCategory1 = newValue!;
+                      selectedCategory2 = categories[selectedCategory1]!.first;
+                    });
+                  },
+                ),
               ),
               Expanded(
+                flex: 1,
                 child: DropDownCustom(
                   categories: category2,
                   selectedItem: selectedCategory2,
@@ -267,9 +272,7 @@ class _EditPostScreenState extends State<EditPostScreen> {
           Row(
             children: [
               title('العنوان'),
-              Expanded(
-                  child:
-                      TextFieldCustom(text: '', controller: addressController)),
+              Expanded(child: TextFieldCustom(text: '', controller: addressController)),
             ],
           ),
           const SizedBox(
@@ -278,45 +281,20 @@ class _EditPostScreenState extends State<EditPostScreen> {
           Row(
             children: [
               title('السعر'),
-              Expanded(
-                  child:
-                      TextFieldCustom(text: '', controller: priceController)),
-              InkWell(
-                  onTap: () {
-                    showCurrencyPicker(
-                      context: context,
-                      showFlag: true,
-                      showSearchField: true,
-                      showCurrencyName: true,
-                      showCurrencyCode: true,
-                      theme: CurrencyPickerThemeData(backgroundColor: dark),
-                      onSelect: (Currency currency) {
-                        symbol = currency.symbol;
-                        setState(() {});
-                      },
-                      favorite: ['SYP'],
-                    );
-                  },
-                  child: Container(
-                    padding: const EdgeInsets.only(left: 10),
-                    margin: const EdgeInsets.only(left: 20),
-                    decoration: BoxDecoration(
-                        border: Border.all(color: purple),
-                        borderRadius: BorderRadius.circular(15)),
-                    child: Row(
-                      children: [
-                        Text(
-                          symbol,
-                          style: style2,
-                        ),
-                        const Icon(
-                          Icons.arrow_drop_down,
-                          size: 40,
-                          color: purple,
-                        ),
-                      ],
+              Expanded(child: TextFieldCustom(text: '', controller: priceController)),
+              Container(
+                padding: const EdgeInsets.all(10),
+                margin: const EdgeInsets.only(right: 10),
+                // decoration: BoxDecoration(border: Border.all(color: purple), borderRadius: BorderRadius.circular(15)),
+                child: const Row(
+                  children: [
+                    Text(
+                      'ل.س',
+                      style: style2,
                     ),
-                  ))
+                  ],
+                ),
+              )
             ],
           ),
           const SizedBox(
@@ -339,8 +317,7 @@ class _EditPostScreenState extends State<EditPostScreen> {
           Row(
             children: [
               title('الكلمات المفتاحية'),
-              Expanded(
-                  child: TextFieldCustom(text: '', controller: tagsController))
+              Expanded(child: TextFieldCustom(text: '', controller: tagsController))
             ],
           ),
           const SizedBox(height: 20),
@@ -354,14 +331,12 @@ class _EditPostScreenState extends State<EditPostScreen> {
                           Provider.of<AuthSataProvider>(context, listen: false)
                               .changeAuthState(newState: AuthState.waiting);
 
-                          List<String> keywords =
-                              tagsController.text.split(' ').toList();
+                          List<String> keywords = tagsController.text.split(' ').toList();
                           String uid = FirebaseAuth.instance.currentUser!.uid;
 
                           List<String> images = [];
 
-                          images = await FileService()
-                              .uploadeimages(pickedimages, context);
+                          images = await FileService().uploadeimages(pickedimages, context);
                           if (images.isNotEmpty) {
                             Post post = Post(
                                 id: postId,
@@ -379,22 +354,16 @@ class _EditPostScreenState extends State<EditPostScreen> {
                                 photos: images + photos);
                             await PostDbService().updatePost(post);
 
-                            Provider.of<AuthSataProvider>(context,
-                                    listen: false)
+                            Provider.of<AuthSataProvider>(context, listen: false)
                                 .changeAuthState(newState: AuthState.notSet);
-                            SnackBar snackBar = const SnackBar(
-                                content: Text('تم تعديل المنشور بنجاح'));
-                            ScaffoldMessenger.of(context)
-                                .showSnackBar(snackBar);
-                            Navigator.of(context)
-                                .pushNamed(HomeScreen.routeName);
+                            SnackBar snackBar = const SnackBar(content: Text('تم تعديل المنشور بنجاح'));
+                            ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                            Navigator.of(context).pushNamed(HomeScreen.routeName);
                           } else {
-                            SnackBar snackBar = const SnackBar(
-                                content: Text(
-                                    'حدثت مشكلة اثناء تحميل الصور, الرجاء المحاولة لاحقاً'));
+                            SnackBar snackBar =
+                                const SnackBar(content: Text('حدثت مشكلة اثناء تحميل الصور, الرجاء المحاولة لاحقاً'));
 
-                            ScaffoldMessenger.of(context)
-                                .showSnackBar(snackBar);
+                            ScaffoldMessenger.of(context).showSnackBar(snackBar);
                           }
                         })
                     : const CircularProgressIndicator(

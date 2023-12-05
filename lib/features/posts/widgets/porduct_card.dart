@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:image_network/image_network.dart';
 import 'package:lets_buy/core/config/constant/constant.dart';
 import 'package:lets_buy/core/services/user_db_services.dart';
 import 'package:lets_buy/features/posts/screens/details_screen.dart';
@@ -69,12 +72,46 @@ class _ProductCardState extends State<ProductCard> {
                         child: ClipRRect(
                             borderRadius: BorderRadius.circular(20),
                             child: (widget.imageProduct != null)
-                                ? Image.network(
-                                    widget.imageProduct!,
-                                    fit: BoxFit.cover,
+                                ? !Platform.isAndroid
+                                    ? ImageNetwork(
+                                        image: widget.imageProduct!,
+                                        height: 150,
+                                        width: 150,
+                                        duration: 1500,
+                                        curve: Curves.easeIn,
+                                        onPointer: true,
+                                        debugPrint: false,
+                                        fullScreen: false,
+                                        fitAndroidIos: BoxFit.cover,
+                                        fitWeb: BoxFitWeb.cover,
+                                        borderRadius: BorderRadius.circular(10),
+                                        onLoading: const CircularProgressIndicator(
+                                          color: purple,
+                                        ),
+                                        onError: const Icon(
+                                          Icons.error,
+                                          color: Colors.red,
+                                        ),
+                                        onTap: () {
+                                          Navigator.of(context)
+                                              .push(MaterialPageRoute(
+                                                  builder: (context) => DetailsScreen(
+                                                        postId: widget.postId,
+                                                      )))
+                                              .then((value) {
+                                            setState(() {
+                                              widget.isFavorite = value;
+                                            });
+                                          });
+                                          debugPrint("©gabriel_patrick_souza");
+                                        },
+                                      )
+                                    : Image.network(
+                                        widget.imageProduct!,
+                                        fit: BoxFit.cover,
 
-                                    //width: double.infinity,
-                                  )
+                                        //width: double.infinity,
+                                      )
                                 : Container(
                                     alignment: Alignment.center,
                                     child: const Text(

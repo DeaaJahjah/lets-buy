@@ -160,14 +160,17 @@ class _AddPostScreenState extends State<AddPostScreen> {
           const SizedBox(height: 10),
           Row(
             children: [
-              DropDownCustom(
-                categories: cities,
-                selectedItem: postType,
-                onChanged: (String? newValue) {
-                  setState(() {
-                    postType = newValue!;
-                  });
-                },
+              Expanded(
+                flex: 1,
+                child: DropDownCustom(
+                  categories: cities,
+                  selectedItem: postType,
+                  onChanged: (String? newValue) {
+                    setState(() {
+                      postType = newValue!;
+                    });
+                  },
+                ),
               ),
             ],
           ),
@@ -185,8 +188,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
                     onChanged: (String? newValue) {
                       setState(() {
                         selectedCategory1 = newValue!;
-                        selectedCategory2 =
-                            categories[selectedCategory1]!.first;
+                        selectedCategory2 = categories[selectedCategory1]!.first;
                         visible = true;
                       });
                     },
@@ -212,9 +214,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
           Row(
             children: [
               title('العنوان'),
-              Expanded(
-                  child:
-                      TextFieldCustom(text: '', controller: addressController)),
+              Expanded(child: TextFieldCustom(text: '', controller: addressController)),
             ],
           ),
           const SizedBox(
@@ -262,11 +262,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
             height: 10,
           ),
           Row(
-            children: [
-              title('كلمات مفتاحية'),
-              Expanded(
-                  child: TextFieldCustom(text: '', controller: tagsController))
-            ],
+            children: [title('كلمات مفتاحية'), Expanded(child: TextFieldCustom(text: '', controller: tagsController))],
           ),
           const SizedBox(height: 20),
           Consumer<AuthSataProvider>(builder: (context, value, child) {
@@ -276,8 +272,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
                         text: 'اضافة',
                         color: purple,
                         onPressed: () async {
-                          if (selectedCategory1 == 'اختر' ||
-                              selectedCategory2 == 'اختر') {
+                          if (selectedCategory1 == 'اختر' || selectedCategory2 == 'اختر') {
                             var snackBar = const SnackBar(
                               content: Text(
                                 'الرجاء اختيار تصنيف',
@@ -285,23 +280,20 @@ class _AddPostScreenState extends State<AddPostScreen> {
                               ),
                               backgroundColor: Colors.red,
                             );
-                            ScaffoldMessenger.of(context)
-                                .showSnackBar(snackBar);
+                            ScaffoldMessenger.of(context).showSnackBar(snackBar);
                             return;
                           }
                           //change the state to loading
                           Provider.of<AuthSataProvider>(context, listen: false)
                               .changeAuthState(newState: AuthState.waiting);
                           // split the tags and add them to the list
-                          List<String> keywords =
-                              tagsController.text.split(' ').toList();
+                          List<String> keywords = tagsController.text.split(' ').toList();
 
                           String uid = FirebaseAuth.instance.currentUser!.uid;
 
                           List<String> images = [];
                           //upload the images to firebase storage and get the urls
-                          images = await FileService()
-                              .uploadeimages(pickedimages, context);
+                          images = await FileService().uploadeimages(pickedimages, context);
                           //upload the post to firebase database
                           if (images.isNotEmpty) {
                             Post post = Post(
@@ -320,23 +312,17 @@ class _AddPostScreenState extends State<AddPostScreen> {
 
                             await PostDbService().addPost(post, context);
                             //change the state to notSet
-                            Provider.of<AuthSataProvider>(context,
-                                    listen: false)
+                            Provider.of<AuthSataProvider>(context, listen: false)
                                 .changeAuthState(newState: AuthState.notSet);
-                            SnackBar snackBar = const SnackBar(
-                                content: Text('تمت الاضافة بنجاح'));
+                            SnackBar snackBar = const SnackBar(content: Text('تمت الاضافة بنجاح'));
 
-                            ScaffoldMessenger.of(context)
-                                .showSnackBar(snackBar);
-                            Navigator.of(context).pushNamedAndRemoveUntil(
-                                HomeScreen.routeName, (route) => false);
+                            ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                            Navigator.of(context).pushNamedAndRemoveUntil(HomeScreen.routeName, (route) => false);
                           } else {
-                            SnackBar snackBar = const SnackBar(
-                                content: Text(
-                                    'حدثت مشكلة اثناء تحميل الصور, الرجاء المحاولة لاحقاً'));
+                            SnackBar snackBar =
+                                const SnackBar(content: Text('حدثت مشكلة اثناء تحميل الصور, الرجاء المحاولة لاحقاً'));
 
-                            ScaffoldMessenger.of(context)
-                                .showSnackBar(snackBar);
+                            ScaffoldMessenger.of(context).showSnackBar(snackBar);
                           }
                         })
                     : const CircularProgressIndicator(

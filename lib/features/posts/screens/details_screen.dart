@@ -1,6 +1,9 @@
+import 'dart:io';
+
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:image_network/image_network.dart';
 import 'package:lets_buy/core/config/constant/constant.dart';
 import 'package:lets_buy/features/auth/models/user_model.dart';
 import 'package:lets_buy/features/posts/models/post.dart';
@@ -10,6 +13,7 @@ import 'package:lets_buy/core/services/user_db_services.dart';
 import 'package:lets_buy/features/posts/widgets/similer_stuff.dart';
 import 'package:lets_buy/core/config/widgets/text_row.dart';
 import 'package:lets_buy/features/chat/services/stream_chat_service.dart';
+import 'package:widget_zoom/widget_zoom.dart';
 
 class DetailsScreen extends StatefulWidget {
   static const String routeName = 'details_screen';
@@ -64,10 +68,31 @@ class _DetailsScreenState extends State<DetailsScreen> {
                         margin: const EdgeInsets.all(5.0),
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(10),
-                          child: Image.network(
-                            item,
-                            fit: BoxFit.cover,
-                          ),
+                          child: !Platform.isAndroid
+                              ? ImageNetwork(
+                                  image: item,
+                                  height: 150,
+                                  width: 150,
+                                  duration: 1500,
+                                  curve: Curves.easeIn,
+                                  onPointer: true,
+                                  debugPrint: false,
+                                  fullScreen: false,
+                                  fitAndroidIos: BoxFit.cover,
+                                  fitWeb: BoxFitWeb.cover,
+                                  borderRadius: BorderRadius.circular(10),
+                                  onLoading: const CircularProgressIndicator(
+                                    color: purple,
+                                  ),
+                                  onError: const Icon(
+                                    Icons.error,
+                                    color: Colors.red,
+                                  ),
+                                  onTap: () {})
+                              : Image.network(
+                                  item,
+                                  fit: BoxFit.cover,
+                                ),
                         ),
                       ))
                   .toList();
