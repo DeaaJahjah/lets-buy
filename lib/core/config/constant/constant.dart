@@ -9,20 +9,15 @@ const Color white = Color(0xffffffff);
 
 const String font = 'Tajawal';
 
-const TextStyle textStyle =
-    TextStyle(color: white, fontFamily: font, fontSize: 12);
+const TextStyle textStyle = TextStyle(color: white, fontFamily: font, fontSize: 12);
 
-const TextStyle itemTextStyle =
-    TextStyle(color: white, fontFamily: font, fontSize: 18);
+const TextStyle itemTextStyle = TextStyle(color: white, fontFamily: font, fontSize: 18);
 
-const TextStyle appBarTextStyle = TextStyle(
-    color: white, fontFamily: font, fontWeight: FontWeight.bold, fontSize: 16);
+const TextStyle appBarTextStyle = TextStyle(color: white, fontFamily: font, fontWeight: FontWeight.bold, fontSize: 16);
 
-const TextStyle style1 = TextStyle(
-    color: purple, fontFamily: font, fontSize: 14, fontWeight: FontWeight.bold);
+const TextStyle style1 = TextStyle(color: purple, fontFamily: font, fontSize: 14, fontWeight: FontWeight.bold);
 
-const TextStyle style2 = TextStyle(
-    color: white, fontFamily: font, fontSize: 12, fontWeight: FontWeight.bold);
+const TextStyle style2 = TextStyle(color: white, fontFamily: font, fontSize: 12, fontWeight: FontWeight.bold);
 
 const sizedBoxSmall = SizedBox(height: 10);
 
@@ -31,30 +26,20 @@ const sizedBoxMedium = SizedBox(height: 20);
 const sizedBoxLarge = SizedBox(height: 30);
 
 StreamChatThemeData streamChatTheme = StreamChatThemeData(
-  colorTheme: StreamColorTheme.dark(
-      accentPrimary: purple, appBg: dark, barsBg: dark, overlayDark: purple),
+  colorTheme: StreamColorTheme.dark(accentPrimary: purple, appBg: dark, barsBg: dark, overlayDark: purple),
   messageInputTheme: const StreamMessageInputThemeData(
     actionButtonColor: purple,
     sendButtonColor: purple,
   ),
-  otherMessageTheme:
-      const StreamMessageThemeData(messageBackgroundColor: purple),
-  channelListViewTheme:
-      const StreamChannelListViewThemeData(backgroundColor: dark),
+  otherMessageTheme: const StreamMessageThemeData(messageBackgroundColor: purple),
+  channelListViewTheme: const StreamChannelListViewThemeData(backgroundColor: dark),
 );
 
 var categories = {
   'اختر': ['اختر'],
   'ملابس': ['نسائي', 'رجيالي', 'ولادي'],
   'رياضة': ['آلات', 'ملابس', 'ألعاب'],
-  'الكترونيات': [
-    'جوالات',
-    'لابتوبات',
-    'شاشات',
-    'غسالات',
-    'برادات',
-    'مكيفات هوائية'
-  ],
+  'الكترونيات': ['جوالات', 'لابتوبات', 'شاشات', 'غسالات', 'برادات', 'مكيفات هوائية'],
   'أثاث': ['غرفة نوم', 'صالون', 'غرفة معيشة', 'أثاث مطبخ'],
   'أطفال': ['ألعاب', 'ملابس'],
   'اكسسوارات': ['حقائب', 'مجوهرات', 'ساعات'],
@@ -80,27 +65,13 @@ List<String> cities = [
 ];
 List<Category> categoriesHome = [
   Category(name: 'الكل', urlImage: 'assets/images/all.png', isSelected: true),
-  Category(
-      name: 'ملابس', urlImage: 'assets/images/clothes.png', isSelected: false),
-  Category(
-      name: 'أطفال', urlImage: 'assets/images/kids.png', isSelected: false),
-  Category(
-      name: 'احزية', urlImage: 'assets/images/shoes.png', isSelected: false),
-  Category(
-      name: 'رياضة', urlImage: 'assets/images/sport.png', isSelected: false),
-  Category(
-      name: 'أثاث', urlImage: 'assets/images/furniture.png', isSelected: false),
-  Category(
-      name: 'الكترونيات',
-      urlImage: 'assets/images/electronics.png',
-      isSelected: false),
-  Category(
-      name: 'اكسسوارات',
-      urlImage: 'assets/images/accessories.png',
-      isSelected: false),
-  Category(
-      name: 'مستلزمات مدرسية',
-      urlImage: 'assets/images/school.png',
-      isSelected: false),
-  Category(name: 'كتب', urlImage: 'assets/images/book.png', isSelected: false),
+  Category(name: 'ملابس', urlImage: 'assets/images/clothes1.png', isSelected: false),
+  Category(name: 'أطفال', urlImage: 'assets/images/kids1.png', isSelected: false),
+  Category(name: 'احزية', urlImage: 'assets/images/shoes1.png', isSelected: false),
+  Category(name: 'رياضة', urlImage: 'assets/images/sport.png', isSelected: false),
+  Category(name: 'أثاث', urlImage: 'assets/images/furniture1.png', isSelected: false),
+  Category(name: 'الكترونيات', urlImage: 'assets/images/electronics1.png', isSelected: false),
+  Category(name: 'اكسسوارات', urlImage: 'assets/images/accessories1.png', isSelected: false),
+  Category(name: 'مستلزمات مدرسية', urlImage: 'assets/images/school.png', isSelected: false),
+  Category(name: 'كتب', urlImage: 'assets/images/book1.png', isSelected: false),
 ];

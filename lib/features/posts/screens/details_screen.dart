@@ -1,24 +1,23 @@
-import 'dart:io';
-
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:image_network/image_network.dart';
 import 'package:lets_buy/core/config/constant/constant.dart';
-import 'package:lets_buy/features/auth/models/user_model.dart';
-import 'package:lets_buy/features/posts/models/post.dart';
-import 'package:lets_buy/features/posts/services/post_db_service.dart';
+import 'package:lets_buy/core/config/widgets/text_row.dart';
 import 'package:lets_buy/core/services/report_db_service.dart';
 import 'package:lets_buy/core/services/user_db_services.dart';
-import 'package:lets_buy/features/posts/widgets/similer_stuff.dart';
-import 'package:lets_buy/core/config/widgets/text_row.dart';
+import 'package:lets_buy/features/auth/models/user_model.dart';
 import 'package:lets_buy/features/chat/services/stream_chat_service.dart';
-import 'package:widget_zoom/widget_zoom.dart';
+import 'package:lets_buy/features/posts/models/post.dart';
+import 'package:lets_buy/features/posts/providers/posts_provider.dart';
+import 'package:lets_buy/features/posts/services/post_db_service.dart';
+import 'package:lets_buy/features/posts/widgets/similer_stuff.dart';
+import 'package:provider/provider.dart';
 
 class DetailsScreen extends StatefulWidget {
   static const String routeName = 'details_screen';
   final String? postId;
-  DetailsScreen({Key? key, this.postId}) : super(key: key);
+  final bool isFavorite;
+  const DetailsScreen({Key? key, this.postId, required this.isFavorite}) : super(key: key);
 
   @override
   State<DetailsScreen> createState() => _DetailsScreenState();
@@ -34,17 +33,16 @@ class _DetailsScreenState extends State<DetailsScreen> {
   String uid = FirebaseAuth.instance.currentUser!.uid;
   @override
   void initState() {
-    Future.delayed(
-      Duration.zero,
-      () {
+    Future.delayed(Duration.zero, () {
+      if (mounted) {
         UserDbServices().getUser(uid).then((value) {
           setState(() {
             userModel = value;
             loading = false;
           });
         });
-      },
-    );
+      }
+    });
     super.initState();
   }
 
@@ -52,6 +50,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: dark,
+      // appBar: AppBar(),
       body: WillPopScope(
         onWillPop: () async {
           Navigator.of(context).pop(state);
@@ -68,31 +67,10 @@ class _DetailsScreenState extends State<DetailsScreen> {
                         margin: const EdgeInsets.all(5.0),
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(10),
-                          child: !Platform.isAndroid
-                              ? ImageNetwork(
-                                  image: item,
-                                  height: 150,
-                                  width: 150,
-                                  duration: 1500,
-                                  curve: Curves.easeIn,
-                                  onPointer: true,
-                                  debugPrint: false,
-                                  fullScreen: false,
-                                  fitAndroidIos: BoxFit.cover,
-                                  fitWeb: BoxFitWeb.cover,
-                                  borderRadius: BorderRadius.circular(10),
-                                  onLoading: const CircularProgressIndicator(
-                                    color: purple,
-                                  ),
-                                  onError: const Icon(
-                                    Icons.error,
-                                    color: Colors.red,
-                                  ),
-                                  onTap: () {})
-                              : Image.network(
-                                  item,
-                                  fit: BoxFit.cover,
-                                ),
+                          child: Image.network(
+                            item,
+                            fit: BoxFit.cover,
+                          ),
                         ),
                       ))
                   .toList();
@@ -115,7 +93,8 @@ class _DetailsScreenState extends State<DetailsScreen> {
                                     });
                                   },
                                   autoPlay: true,
-                                  aspectRatio: 1.3,
+                                  // aspectRatio: 1.3,
+                                  // aspectRatio: ,
                                   enlargeCenterPage: true,
                                 ),
                                 items: imageSliders,
@@ -188,35 +167,13 @@ class _DetailsScreenState extends State<DetailsScreen> {
                                   )
                                 : const SizedBox.shrink(),
                             (!loading)
-                                ? Padding(
-                                    padding: const EdgeInsets.symmetric(vertical: 10),
-                                    child: InkWell(
-                                      onTap: () async {
-                                        if (userModel!.isFavouritePost(snapshot.data!.id!)) {
-                                          await UserDbServices().removeFromFavourites(snapshot.data!.id!);
-                                          state = false;
-                                        } else {
-                                          await UserDbServices().addToFivourites(snapshot.data!.id!);
-                                          state = true;
-                                        }
-                                        setState(() {});
-                                      },
-                                      child: ((userModel!.isFavouritePost(snapshot.data!.id!)))
-                                          ? const Icon(
-                                              Icons.favorite,
-                                              color: Colors.red,
-                                              size: 25,
-                                            )
-                                          : const Icon(
-                                              Icons.favorite_outline,
-                                              color: white,
-                                              size: 25,
-                                            ),
-                                    ))
-                                : const CircularProgressIndicator(
-                                    color: purple,
-                                  ),
-                            const SizedBox(height: 10),
+                                ? FavourteWidget(
+                                    postId: widget.postId!,
+                                    userId: userModel!.id!,
+                                    // userModel: userModel!,
+                                    // isFavorite: widget.isFavorite,
+                                  )
+                                : const SizedBox(height: 10),
                             InkWell(
                               onTap: () async {
                                 //send report
@@ -252,5 +209,96 @@ class _DetailsScreenState extends State<DetailsScreen> {
         )),
       ),
     );
+  }
+}
+
+class FavourteWidget extends StatefulWidget {
+  // UserModel userModel;
+  final String postId;
+  // bool isFavorite;
+  final String userId;
+
+  const FavourteWidget(
+      {Key? key,
+      required this.userId,
+      //  required this.userModel, required this.isFavorite,
+      required this.postId})
+      : super(key: key);
+
+  @override
+  State<FavourteWidget> createState() => _FavourteWidgetState();
+}
+
+class _FavourteWidgetState extends State<FavourteWidget> {
+  bool loading = false;
+  late bool isfavorite = false;
+  UserModel? userModel;
+
+  Future<void> updateUser() async {
+    userModel = await UserDbServices().getUser(widget.userId);
+    setState(() {
+      context.read<UserInfoProvider>().updateUerInfo(user: userModel!);
+      isfavorite = userModel!.isFavouritePost(widget.postId);
+      loading = false;
+    });
+  }
+
+  @override
+  void initState() {
+    // isfavorite = widget.isFavorite;
+    loading = true;
+    updateUser();
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    // print(userModel!.isFavouritePost(widget.postId));
+    return !loading
+        ? Padding(
+            padding: const EdgeInsets.symmetric(vertical: 10),
+            child: InkWell(
+              onTap: () async {
+                if (userModel!.isFavouritePost(widget.postId)) {
+                  loading = true;
+                  setState(() {});
+                  print('sssssss $loading');
+                  await UserDbServices().removeFromFavourites(widget.postId);
+                  await updateUser();
+                  loading = false;
+                  isfavorite = false;
+                  setState(() {});
+                } else {
+                  loading = true;
+                  setState(() {});
+                  print('sssssss $loading');
+
+                  await UserDbServices().addToFivourites(widget.postId);
+                  await updateUser();
+                  isfavorite = false;
+
+                  loading = false;
+                  setState(() {});
+                }
+              },
+              child: userModel!.isFavouritePost(widget.postId)
+                  ? const Icon(
+                      Icons.favorite,
+                      color: Colors.red,
+                      size: 25,
+                    )
+                  : const Icon(
+                      Icons.favorite_outline,
+                      color: white,
+                      size: 25,
+                    ),
+            ))
+        : const SizedBox(
+            height: 25,
+            width: 25,
+            child: CircularProgressIndicator(
+              color: purple,
+            ),
+          );
   }
 }

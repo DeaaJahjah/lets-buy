@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:lets_buy/core/config/routes/routes.dart';
 import 'package:lets_buy/core/config/constant/constant.dart';
+import 'package:lets_buy/core/config/routes/routes.dart';
 import 'package:lets_buy/features/auth/Providers/auth_state_provider.dart';
+import 'package:lets_buy/features/posts/providers/posts_provider.dart';
 import 'package:lets_buy/features/search/data_provider.dart';
 import 'package:lets_buy/features/search/search_provider.dart';
 import 'package:provider/provider.dart';
@@ -27,6 +28,9 @@ class App extends StatelessWidget {
         ),
         ChangeNotifierProvider<SearchProvider>(
           create: (_) => SearchProvider(),
+        ),
+        ChangeNotifierProvider<UserInfoProvider>(
+          create: (_) => UserInfoProvider(),
         ),
       ],
       child: MaterialApp(

@@ -31,8 +31,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   FirebaseAuth auth = FirebaseAuth.instance;
   late String verificationIDFromFirebase;
-  PhoneVerificationState currentState =
-      PhoneVerificationState.SHOW_PHONE_FORM_STATE;
+  PhoneVerificationState currentState = PhoneVerificationState.SHOW_PHONE_FORM_STATE;
   @override
   Widget build(BuildContext context) {
     return currentState == PhoneVerificationState.SHOW_PHONE_FORM_STATE
@@ -46,20 +45,20 @@ class _LoginScreenState extends State<LoginScreen> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     sizedBoxLarge,
+                    sizedBoxLarge,
+
                     Image.asset(
-                      'assets/images/logo.png',
+                      'assets/images/logo-with-text.png',
                       height: MediaQuery.sizeOf(context).height * 0.25,
                     ),
-                    sizedBoxSmall,
-                    const Text(
-                      'Let\'s Buy',
-                      style: TextStyle(fontSize: 24),
-                    ),
+                    // sizedBoxSmall,
+                    // const Text(
+                    //   'Let\'s Buy',
+                    //   style: TextStyle(fontSize: 24),
+                    // ),
                     sizedBoxLarge,
                     TextFieldCustom(
-                        keyboardType: TextInputType.number,
-                        text: 'أدخل رقم الهاتف',
-                        controller: phoneNumcontroller),
+                        keyboardType: TextInputType.number, text: 'أدخل رقم الهاتف', controller: phoneNumcontroller),
                     sizedBoxLarge,
                     isLoading
                         ? const CustomProgress()
@@ -70,8 +69,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               isLoading = true;
                               setState(() {});
                               if (phoneNumcontroller.text.length != 9) {
-                                showErrorSnackBar(context,
-                                    'يجب ان يكون رقم الهاتف تسع أرقام');
+                                showErrorSnackBar(context, 'يجب ان يكون رقم الهاتف تسع أرقام');
 
                                 isLoading = false;
                                 setState(() {});
@@ -80,10 +78,8 @@ class _LoginScreenState extends State<LoginScreen> {
 
                               try {
                                 await auth.verifyPhoneNumber(
-                                  phoneNumber:
-                                      '+966 ${phoneNumcontroller.text}',
-                                  verificationCompleted:
-                                      (PhoneAuthCredential credential) async {
+                                  phoneNumber: '+966 ${phoneNumcontroller.text}',
+                                  verificationCompleted: (PhoneAuthCredential credential) async {
                                     // ANDROID ONLY!
 
                                     // Sign the user in (or link) with the auto-generated credential
@@ -95,19 +91,14 @@ class _LoginScreenState extends State<LoginScreen> {
                                     setState(() {
                                       isLoading = false;
                                     });
-                                    showErrorSnackBar(
-                                        context, '${error.message}');
+                                    showErrorSnackBar(context, '${error.message}');
                                   },
-                                  codeAutoRetrievalTimeout:
-                                      (String verificationId) {},
-                                  codeSent:
-                                      (verificationId, resendingToken) async {
+                                  codeAutoRetrievalTimeout: (String verificationId) {},
+                                  codeSent: (verificationId, resendingToken) async {
                                     setState(() {
                                       isLoading = false;
-                                      currentState = PhoneVerificationState
-                                          .SHOW_OTP_FORM_STATE;
-                                      verificationIDFromFirebase =
-                                          verificationId;
+                                      currentState = PhoneVerificationState.SHOW_OTP_FORM_STATE;
+                                      verificationIDFromFirebase = verificationId;
                                     });
                                   },
                                 );
@@ -126,8 +117,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       children: [
                         const Text(
                           'ليس لديك حساب؟',
-                          style: TextStyle(
-                              color: white, fontSize: 16, fontFamily: font),
+                          style: TextStyle(color: white, fontSize: 16, fontFamily: font),
                         ),
                         const SizedBox(
                           width: 5,
@@ -135,13 +125,9 @@ class _LoginScreenState extends State<LoginScreen> {
                         TextButton(
                           child: const Text('انضم الينا',
                               style: TextStyle(
-                                  color: purple,
-                                  fontSize: 16,
-                                  fontFamily: font,
-                                  fontWeight: FontWeight.bold)),
+                                  color: purple, fontSize: 16, fontFamily: font, fontWeight: FontWeight.bold)),
                           onPressed: () {
-                            Navigator.of(context)
-                                .pushNamed(SignUpScreen.routeName);
+                            Navigator.of(context).pushNamed(SignUpScreen.routeName);
                           },
                         ),
                       ],
@@ -167,11 +153,7 @@ class _LoginScreenState extends State<LoginScreen> {
             const SizedBox(
               height: 100.0,
             ),
-            Text('ادخل رمز التأكيد',
-                style: Theme.of(context)
-                    .textTheme
-                    .headlineMedium!
-                    .copyWith(color: white)),
+            Text('ادخل رمز التأكيد', style: Theme.of(context).textTheme.headlineMedium!.copyWith(color: white)),
             const SizedBox(
               height: 20.0,
             ),
@@ -196,11 +178,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       selectedFillColor: purple,
                       selectedColor: purple),
                   boxShadows: const [
-                    BoxShadow(
-                        offset: Offset(-2, 2),
-                        spreadRadius: 1,
-                        blurRadius: 2,
-                        color: Colors.black54)
+                    BoxShadow(offset: Offset(-2, 2), spreadRadius: 1, blurRadius: 2, color: Colors.black54)
                   ],
                   pastedTextStyle: TextStyle(
                     color: Colors.green.shade600,
@@ -234,27 +212,23 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   _verifyOTPButton() async {
-    PhoneAuthCredential phoneAuthCredential = PhoneAuthProvider.credential(
-        verificationId: verificationIDFromFirebase,
-        smsCode: otpController.text);
+    PhoneAuthCredential phoneAuthCredential =
+        PhoneAuthProvider.credential(verificationId: verificationIDFromFirebase, smsCode: otpController.text);
     signInWithPhoneAuthCredential(phoneAuthCredential);
   }
 
-  void signInWithPhoneAuthCredential(
-      PhoneAuthCredential phoneAuthCredential) async {
+  void signInWithPhoneAuthCredential(PhoneAuthCredential phoneAuthCredential) async {
     setState(() {
       isLoadingOTP = true;
     });
     try {
-      final authCredential =
-          await auth.signInWithCredential(phoneAuthCredential);
+      final authCredential = await auth.signInWithCredential(phoneAuthCredential);
       if (authCredential.user != null) {
         setState(() {
           isLoadingOTP = false;
         });
         final client = StreamChatCore.of(context).client;
-        await client.connectUser(OwnUser(id: authCredential.user!.uid),
-            authCredential.user!.displayName!);
+        await client.connectUser(OwnUser(id: authCredential.user!.uid), authCredential.user!.displayName!);
 
         // User(id: authCredential.user!.uid), authCredential.user!.displayName!
 

@@ -38,6 +38,31 @@ class Post extends Equatable {
       this.keywrds,
       this.photos});
 
+  Post copyWith(
+    String? userId,
+    String? address,
+    String? city,
+    String? productStatus,
+    String? category1,
+    String? category2,
+    String? description,
+    String? price,
+    String? symbol,
+    bool? isAvailable,
+  ) {
+    return Post(
+        userId: userId ?? this.userId,
+        address: address ?? this.address,
+        city: city ?? this.city,
+        productStatus: productStatus ?? this.productStatus,
+        category1: category1 ?? this.category1,
+        category2: category2 ?? this.category2,
+        description: description ?? this.description,
+        price: price ?? this.price,
+        symbol: symbol ?? this.symbol,
+        isAvailable: isAvailable ?? this.isAvailable);
+  }
+
   factory Post.fromJson(Map<String, dynamic> json) => _$PostFromJson(json);
 
   factory Post.fromFirestore(DocumentSnapshot documentSnapshot) {

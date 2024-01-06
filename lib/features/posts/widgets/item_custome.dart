@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:image_network/image_network.dart';
 import 'package:lets_buy/core/config/constant/constant.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 
 class ItemCustom extends StatelessWidget {
   final String? urlImage;

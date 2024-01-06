@@ -1,21 +1,22 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
-import 'package:lets_buy/features/auth/models/user_model.dart';
-
-import 'package:lets_buy/features/posts/models/post.dart';
-
-import 'package:lets_buy/features/posts/services/post_db_service.dart';
-import 'package:lets_buy/core/services/user_db_services.dart';
-import 'package:lets_buy/features/posts/widgets/category_card.dart';
 import 'package:lets_buy/core/config/constant/constant.dart';
-import 'package:lets_buy/features/home_screen/widgets/custom_navigation_bar.dart';
+import 'package:lets_buy/core/config/constant/keys.dart';
+import 'package:lets_buy/core/config/enums/enums.dart';
 import 'package:lets_buy/core/config/widgets/drawer_item.dart';
-import 'package:lets_buy/features/posts/widgets/porduct_card.dart';
 import 'package:lets_buy/features/chat/messages_screen.dart';
+import 'package:lets_buy/features/help/help_screen.dart';
+import 'package:lets_buy/features/home_screen/widgets/custom_navigation_bar.dart';
+import 'package:lets_buy/features/posts/models/post.dart';
+import 'package:lets_buy/features/posts/providers/posts_provider.dart';
 import 'package:lets_buy/features/posts/screens/add_post.dart';
 import 'package:lets_buy/features/posts/screens/favourite_screen.dart';
-import 'package:lets_buy/features/help/help_screen.dart';
 import 'package:lets_buy/features/posts/screens/my_posts_screen.dart';
+import 'package:lets_buy/features/posts/services/post_db_service.dart';
+import 'package:lets_buy/features/posts/widgets/category_card.dart';
+import 'package:lets_buy/features/posts/widgets/porduct_card.dart';
+import 'package:provider/provider.dart';
 import 'package:stream_chat_flutter_core/stream_chat_flutter_core.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -30,14 +31,12 @@ class _HomeScreenState extends State<HomeScreen> {
   String category = categoriesHome[0].name;
   bool isSwitched = true;
   bool loading = true;
-  UserModel? userModel;
 
   String uid = FirebaseAuth.instance.currentUser!.uid;
   @override
   void initState() {
-    UserDbServices().getUser(uid).then((value) {
+    context.read<UserInfoProvider>().getUserInfo(uid: uid).then((value) {
       setState(() {
-        userModel = value;
         loading = false;
       });
     });
@@ -114,43 +113,41 @@ class _HomeScreenState extends State<HomeScreen> {
                     bottomRight: Radius.circular(25),
                   ),
                 ),
-                child: FutureBuilder<UserModel?>(
-                    future: UserDbServices().getUser(uid),
-                    builder: (context, snapshot) {
-                      if (snapshot.hasData) {
-                        return Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            const SizedBox(height: 10),
-                            CircleAvatar(
-                              backgroundColor: purple,
-                              radius: 50,
-                              backgroundImage: NetworkImage(
-                                snapshot.data!.imgUrl,
-                                scale: 4,
-                              ),
-                            ),
-                            const SizedBox(height: 10),
-                            Text(
-                              snapshot.data!.name,
-                              style: const TextStyle(
-                                color: white,
-                                fontSize: 14,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            const SizedBox(height: 10),
-                            Text(
-                              snapshot.data!.email,
-                              style: const TextStyle(color: white, fontSize: 12, fontWeight: FontWeight.bold),
-                            ),
-                          ],
-                        );
-                      }
-                      return const Center(
-                        child: CircularProgressIndicator(color: purple),
-                      );
-                    }),
+                child: Consumer<UserInfoProvider>(builder: (context, provider, child) {
+                  if (provider.dataState == DataState.done) {
+                    return Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const SizedBox(height: 10),
+                        CircleAvatar(
+                          backgroundColor: purple,
+                          radius: 50,
+                          backgroundImage: NetworkImage(
+                            provider.user!.imgUrl,
+                            scale: 4,
+                          ),
+                        ),
+                        const SizedBox(height: 10),
+                        Text(
+                          provider.user!.name,
+                          style: const TextStyle(
+                            color: white,
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        const SizedBox(height: 10),
+                        Text(
+                          provider.user!.email,
+                          style: const TextStyle(color: white, fontSize: 12, fontWeight: FontWeight.bold),
+                        ),
+                      ],
+                    );
+                  }
+                  return const Center(
+                    child: CircularProgressIndicator(color: purple),
+                  );
+                }),
               ),
               sizedBoxLarge,
               DrawerItem(
@@ -239,6 +236,7 @@ class _HomeScreenState extends State<HomeScreen> {
           },
           body: (!loading)
               ? StreamBuilder<List<Post>>(
+                  key: Keys.postsStreamKey,
                   stream: PostDbService().getPostsByCategory(category),
                   builder: (context, snapshot) {
                     if (snapshot.hasData) {
@@ -248,7 +246,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       return GridView.builder(
                           itemCount: posts.length,
                           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2,
+                            crossAxisCount: kIsWeb ? 4 : 2,
                             mainAxisSpacing: 20,
                             childAspectRatio: 0.6,
                             crossAxisSpacing: 2,
@@ -258,7 +256,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               postId: posts[i].id!,
                               imageProduct: (posts[i].photos!.isNotEmpty) ? posts[i].photos!.first : null,
                               address: posts[i].address,
-                              isFavorite: userModel!.isFavouritePost(posts[i].id!),
+                              isFavorite: context.watch<UserInfoProvider>().user!.isFavouritePost(posts[i].id!),
                               type: posts[i].city,
                               price: posts[i].price,
                               productStatus: posts[i].productStatus,

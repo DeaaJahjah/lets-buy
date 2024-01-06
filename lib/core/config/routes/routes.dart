@@ -42,21 +42,21 @@ Route<dynamic>? onGenerateRoute(RouteSettings settings) {
       return MaterialPageRoute(builder: ((_) => const AddPostScreen()));
 
     case DetailsScreen.routeName:
-      return MaterialPageRoute(builder: ((_) => DetailsScreen()));
+      return MaterialPageRoute(
+          builder: ((_) => DetailsScreen(
+                isFavorite: false,
+              )));
 
     case EditPostScreen.routeName:
-      return MaterialPageRoute(
-          builder: ((_) => const EditPostScreen()), settings: settings);
+      return MaterialPageRoute(builder: ((_) => const EditPostScreen()), settings: settings);
     case UpdateProfileScreen.routeName:
-      return MaterialPageRoute(
-          builder: ((_) => const UpdateProfileScreen()), settings: settings);
+      return MaterialPageRoute(builder: ((_) => const UpdateProfileScreen()), settings: settings);
 
     case HelpScreen.routeName:
       return MaterialPageRoute(builder: ((_) => const HelpScreen()));
 
     case VerfiyPhoneNumberScree.routeName:
-      return MaterialPageRoute(
-          builder: ((_) => const VerfiyPhoneNumberScree()), settings: settings);
+      return MaterialPageRoute(builder: ((_) => const VerfiyPhoneNumberScree()), settings: settings);
   }
 
   return null;

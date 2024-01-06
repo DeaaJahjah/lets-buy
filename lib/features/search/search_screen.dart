@@ -165,7 +165,11 @@ class _SearchScreenState extends State<SearchScreen> {
                         controller: controller,
                         shrinkWrap: true,
                         gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                            maxCrossAxisExtent: 350, mainAxisSpacing: 20, crossAxisSpacing: 2, mainAxisExtent: 250),
+                          // crossAxisSpacing: 2,
+                          maxCrossAxisExtent: 350,
+                          mainAxisSpacing: 20,
+                          mainAxisExtent: 350,
+                        ),
                         itemBuilder: (BuildContext context, int i) {
                           var post = posts.filteredPosts[i];
                           return ProductCard(
