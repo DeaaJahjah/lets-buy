@@ -68,10 +68,10 @@ List<Category> categoriesHome = [
   Category(name: 'ملابس', urlImage: 'assets/images/clothes1.png', isSelected: false),
   Category(name: 'أطفال', urlImage: 'assets/images/kids1.png', isSelected: false),
   Category(name: 'احزية', urlImage: 'assets/images/shoes1.png', isSelected: false),
-  Category(name: 'رياضة', urlImage: 'assets/images/sport.png', isSelected: false),
+  Category(name: 'رياضة', urlImage: 'assets/images/sport1.png', isSelected: false),
   Category(name: 'أثاث', urlImage: 'assets/images/furniture1.png', isSelected: false),
   Category(name: 'الكترونيات', urlImage: 'assets/images/electronics1.png', isSelected: false),
   Category(name: 'اكسسوارات', urlImage: 'assets/images/accessories1.png', isSelected: false),
-  Category(name: 'مستلزمات مدرسية', urlImage: 'assets/images/school.png', isSelected: false),
+  Category(name: 'مستلزمات مدرسية', urlImage: 'assets/images/school1.png', isSelected: false),
   Category(name: 'كتب', urlImage: 'assets/images/book1.png', isSelected: false),
 ];
