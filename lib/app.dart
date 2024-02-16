@@ -7,13 +7,13 @@ import 'package:lets_buy/features/posts/providers/posts_provider.dart';
 import 'package:lets_buy/features/search/data_provider.dart';
 import 'package:lets_buy/features/search/search_provider.dart';
 import 'package:provider/provider.dart';
-import 'package:stream_chat_flutter/stream_chat_flutter.dart';
+// import 'package:stream_chat_flutter/stream_chat_flutter.dart';
 
 class App extends StatelessWidget {
-  final StreamChatClient client;
+  // final StreamChatClient client;
   const App({
     Key? key,
-    required this.client,
+    // required this.client,
   }) : super(key: key);
 
   @override
@@ -52,17 +52,17 @@ class App extends StatelessWidget {
             appBarTheme: const AppBarTheme(backgroundColor: purple),
             // colorScheme: ColorScheme(background: dark)
             fontFamily: font),
-        builder: (context, child) {
-          return StreamChat(
-            streamChatThemeData: streamChatTheme,
-            client: client,
-            child: ChannelsBloc(
-              child: UsersBloc(
-                child: child!,
-              ),
-            ),
-          );
-        },
+        // builder: (context, child) {
+        //   return StreamChat(
+        //     streamChatThemeData: streamChatTheme,
+        //     client: client,
+        //     child: ChannelsBloc(
+        //       child: UsersBloc(
+        //         child: child!,
+        //       ),
+        //     ),
+        //   );
+        // },
         initialRoute: '/',
       ),
     );

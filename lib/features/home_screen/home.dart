@@ -5,7 +5,7 @@ import 'package:lets_buy/core/config/constant/constant.dart';
 import 'package:lets_buy/core/config/constant/keys.dart';
 import 'package:lets_buy/core/config/enums/enums.dart';
 import 'package:lets_buy/core/config/widgets/drawer_item.dart';
-import 'package:lets_buy/features/chat/messages_screen.dart';
+// import 'package:lets_buy/features/chat/messages_screen.dart';
 import 'package:lets_buy/features/help/help_screen.dart';
 import 'package:lets_buy/features/home_screen/widgets/custom_navigation_bar.dart';
 import 'package:lets_buy/features/posts/models/post.dart';
@@ -17,7 +17,7 @@ import 'package:lets_buy/features/posts/services/post_db_service.dart';
 import 'package:lets_buy/features/posts/widgets/category_card.dart';
 import 'package:lets_buy/features/posts/widgets/porduct_card.dart';
 import 'package:provider/provider.dart';
-import 'package:stream_chat_flutter_core/stream_chat_flutter_core.dart';
+// import 'package:stream_chat_flutter_core/stream_chat_flutter_core.dart';
 
 class HomeScreen extends StatefulWidget {
   static const String routeName = '/home-screen';
@@ -52,38 +52,38 @@ class _HomeScreenState extends State<HomeScreen> {
         bottomNavigationBar: CustomNavigationBar(index: 2),
         appBar: AppBar(
           centerTitle: true,
-          actions: [
-            StreamBuilder<int>(
-                stream: StreamChatCore.of(context).client.state.totalUnreadCountStream,
-                builder: (context, snapshot) {
-                  if (snapshot.hasData) {
-                    return Stack(
-                      children: [
-                        IconButton(
-                          icon: const Icon(Icons.message),
-                          onPressed: () {
-                            Navigator.of(context).pushNamed(MessagesScreen.routeName);
-                          },
-                        ),
-                        if (snapshot.data != 0)
-                          CircleAvatar(
-                            backgroundColor: purple,
-                            radius: 10,
-                            child: Text(
-                              snapshot.data.toString(),
-                              style: const TextStyle(color: white, fontSize: 8),
-                            ),
-                          )
-                      ],
-                    );
-                  }
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const Center(
-                      child: CircularProgressIndicator(color: purple),
-                    );
-                  }
-                  return const SizedBox.shrink();
-                })
+          actions: const [
+            // StreamBuilder<int>(
+            //     stream: StreamChatCore.of(context).client.state.totalUnreadCountStream,
+            //     builder: (context, snapshot) {
+            //       if (snapshot.hasData) {
+            //         return Stack(
+            //           children: [
+            //             IconButton(
+            //               icon: const Icon(Icons.message),
+            //               onPressed: () {
+            //                 Navigator.of(context).pushNamed(MessagesScreen.routeName);
+            //               },
+            //             ),
+            //             if (snapshot.data != 0)
+            //               CircleAvatar(
+            //                 backgroundColor: purple,
+            //                 radius: 10,
+            //                 child: Text(
+            //                   snapshot.data.toString(),
+            //                   style: const TextStyle(color: white, fontSize: 8),
+            //                 ),
+            //               )
+            //           ],
+            //         );
+            //       }
+            //       if (snapshot.connectionState == ConnectionState.waiting) {
+            //         return const Center(
+            //           child: CircularProgressIndicator(color: purple),
+            //         );
+            //       }
+            //       return const SizedBox.shrink();
+            //     })
           ],
           backgroundColor: dark,
           elevation: 0.0,
@@ -164,13 +164,13 @@ class _HomeScreenState extends State<HomeScreen> {
                     Navigator.of(context).pushNamed(MyPostsScreen.routeName);
                   }),
               sizedBoxSmall,
-              DrawerItem(
-                  icon: Icons.message,
-                  text: 'الرسائل',
-                  onTap: () {
-                    Navigator.of(context).pushNamed(MessagesScreen.routeName);
-                  }),
-              sizedBoxSmall,
+              // DrawerItem(
+              //     icon: Icons.message,
+              //     text: 'الرسائل',
+              //     onTap: () {
+              //       Navigator.of(context).pushNamed(MessagesScreen.routeName);
+              //     }),
+              // sizedBoxSmall,
               DrawerItem(
                   icon: Icons.add_box,
                   text: 'اضافة منشور',

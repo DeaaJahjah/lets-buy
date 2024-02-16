@@ -9,7 +9,7 @@ import 'package:lets_buy/core/config/widgets/text_field_custome.dart';
 import 'package:lets_buy/features/auth/screens/sign_up_screen.dart';
 import 'package:lets_buy/features/home_screen/home.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
-import 'package:stream_chat_flutter/stream_chat_flutter.dart';
+// import 'package:stream_chat_flutter/stream_chat_flutter.dart';
 // import 'package:stream_chat_flutter_core/stream_chat_flutter_core.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -227,8 +227,8 @@ class _LoginScreenState extends State<LoginScreen> {
         setState(() {
           isLoadingOTP = false;
         });
-        final client = StreamChatCore.of(context).client;
-        await client.connectUser(OwnUser(id: authCredential.user!.uid), authCredential.user!.displayName!);
+        // final client = StreamChatCore.of(context).client;
+        // await client.connectUser(OwnUser(id: authCredential.user!.uid), authCredential.user!.displayName!);
 
         // User(id: authCredential.user!.uid), authCredential.user!.displayName!
 

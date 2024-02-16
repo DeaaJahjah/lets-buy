@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lets_buy/features/home_screen/models/category.dart';
-import 'package:stream_chat_flutter/stream_chat_flutter.dart';
+// import 'package:stream_chat_flutter/stream_chat_flutter.dart';
 
 const Color purple = Color(0xff6C3079);
 const Color pink = Color.fromARGB(255, 174, 17, 140);
@@ -25,15 +25,15 @@ const sizedBoxMedium = SizedBox(height: 20);
 
 const sizedBoxLarge = SizedBox(height: 30);
 
-StreamChatThemeData streamChatTheme = StreamChatThemeData(
-  colorTheme: StreamColorTheme.dark(accentPrimary: purple, appBg: dark, barsBg: dark, overlayDark: purple),
-  messageInputTheme: const StreamMessageInputThemeData(
-    actionButtonColor: purple,
-    sendButtonColor: purple,
-  ),
-  otherMessageTheme: const StreamMessageThemeData(messageBackgroundColor: purple),
-  channelListViewTheme: const StreamChannelListViewThemeData(backgroundColor: dark),
-);
+// StreamChatThemeData streamChatTheme = StreamChatThemeData(
+//   colorTheme: StreamColorTheme.dark(accentPrimary: purple, appBg: dark, barsBg: dark, overlayDark: purple),
+//   messageInputTheme: const StreamMessageInputThemeData(
+//     actionButtonColor: purple,
+//     sendButtonColor: purple,
+//   ),
+//   otherMessageTheme: const StreamMessageThemeData(messageBackgroundColor: purple),
+//   channelListViewTheme: const StreamChannelListViewThemeData(backgroundColor: dark),
+// );
 
 var categories = {
   'اختر': ['اختر'],

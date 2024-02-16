@@ -6,7 +6,7 @@ import 'package:lets_buy/core/config/widgets/text_row.dart';
 import 'package:lets_buy/core/services/report_db_service.dart';
 import 'package:lets_buy/core/services/user_db_services.dart';
 import 'package:lets_buy/features/auth/models/user_model.dart';
-import 'package:lets_buy/features/chat/services/stream_chat_service.dart';
+// import 'package:lets_buy/features/chat/services/stream_chat_service.dart';
 import 'package:lets_buy/features/posts/models/post.dart';
 import 'package:lets_buy/features/posts/providers/posts_provider.dart';
 import 'package:lets_buy/features/posts/services/post_db_service.dart';
@@ -153,19 +153,19 @@ class _DetailsScreenState extends State<DetailsScreen> {
                         top: MediaQuery.of(context).size.height * 0.47,
                         child: Column(
                           children: [
-                            (userModel!.id != snapshot.data!.userId)
-                                ? InkWell(
-                                    onTap: () async {
-                                      //Start chat
-                                      await StreamChatService().createChannel(context, snapshot.data!.userId);
-                                    },
-                                    child: const Icon(
-                                      Icons.message,
-                                      color: white,
-                                      size: 25,
-                                    ),
-                                  )
-                                : const SizedBox.shrink(),
+                            // (userModel!.id != snapshot.data!.userId)
+                            //     ? InkWell(
+                            //         onTap: () async {
+                            //           //Start chat
+                            //           await StreamChatService().createChannel(context, snapshot.data!.userId);
+                            //         },
+                            //         child: const Icon(
+                            //           Icons.message,
+                            //           color: white,
+                            //           size: 25,
+                            //         ),
+                            //       )
+                            //     : const SizedBox.shrink(),
                             (!loading)
                                 ? FavourteWidget(
                                     postId: widget.postId!,

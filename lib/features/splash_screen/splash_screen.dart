@@ -6,7 +6,7 @@ import 'package:lets_buy/core/config/extensions/firebase.dart';
 import 'package:lets_buy/features/auth/screens/login_screen.dart';
 import 'package:lets_buy/features/home_screen/home.dart';
 import 'package:show_up_animation/show_up_animation.dart';
-import 'package:stream_chat_flutter_core/stream_chat_flutter_core.dart';
+// import 'package:stream_chat_flutter_core/stream_chat_flutter_core.dart';
 
 class SplashScreen extends StatelessWidget {
   static const String routeName = '/';
@@ -20,8 +20,8 @@ class SplashScreen extends StatelessWidget {
     Timer(const Duration(seconds: 3), () async {
       if (context.logedInUser != null) {
         //connect user to caht sdk
-        final client = StreamChatCore.of(context).client;
-        await client.connectUser(User(id: context.userUid!), context.userToken!);
+        // final client = StreamChatCore.of(context).client;
+        // await client.connectUser(User(id: context.userUid!), context.userToken!);
 
         Navigator.of(context).pushReplacementNamed(HomeScreen.routeName);
       } else {

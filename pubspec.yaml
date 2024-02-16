@@ -74,10 +74,10 @@ dependencies:
   path: ^1.8.0
 
   #chat
-  stream_chat_flutter_core: ^4.0.0
-  stream_chat_flutter: ^4.0.0
-  cached_network_image: ^3.2.1
-  jiffy: ^5.0.0
+  # stream_chat_flutter_core: ^4.0.0
+  # stream_chat_flutter: ^4.0.0
+  # cached_network_image: ^3.2.1
+  # jiffy: ^5.0.0
 
  
 dev_dependencies:

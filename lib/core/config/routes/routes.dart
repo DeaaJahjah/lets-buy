@@ -2,19 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:lets_buy/features/auth/screens/login_screen.dart';
 import 'package:lets_buy/features/auth/screens/sign_up_screen.dart';
 import 'package:lets_buy/features/auth/screens/verfiy_phone_number_screen.dart';
-
-import 'package:lets_buy/features/chat/messages_screen.dart';
-
+// import 'package:lets_buy/features/chat/messages_screen.dart';
+import 'package:lets_buy/features/help/help_screen.dart';
 import 'package:lets_buy/features/home_screen/home.dart';
-import 'package:lets_buy/features/profile/profile_screen.dart';
-import 'package:lets_buy/features/profile/update_profile_screen.dart';
 import 'package:lets_buy/features/posts/screens/add_post.dart';
 import 'package:lets_buy/features/posts/screens/details_screen.dart';
 import 'package:lets_buy/features/posts/screens/edit_post_screen.dart';
 import 'package:lets_buy/features/posts/screens/favourite_screen.dart';
-import 'package:lets_buy/features/help/help_screen.dart';
 import 'package:lets_buy/features/posts/screens/my_posts_screen.dart';
-
+import 'package:lets_buy/features/profile/profile_screen.dart';
+import 'package:lets_buy/features/profile/update_profile_screen.dart';
 import 'package:lets_buy/features/search/search_screen.dart';
 import 'package:lets_buy/features/splash_screen/splash_screen.dart';
 
@@ -32,8 +29,8 @@ Route<dynamic>? onGenerateRoute(RouteSettings settings) {
       return MaterialPageRoute(builder: ((_) => const SearchScreen()));
     case FavouriteScreen.routeName:
       return MaterialPageRoute(builder: ((_) => const FavouriteScreen()));
-    case MessagesScreen.routeName:
-      return MaterialPageRoute(builder: ((_) => const MessagesScreen()));
+    // case MessagesScreen.routeName:
+    //   return MaterialPageRoute(builder: ((_) => const MessagesScreen()));
     case MyPostsScreen.routeName:
       return MaterialPageRoute(builder: ((_) => const MyPostsScreen()));
     case ProfileScreen.routeName:
@@ -43,7 +40,7 @@ Route<dynamic>? onGenerateRoute(RouteSettings settings) {
 
     case DetailsScreen.routeName:
       return MaterialPageRoute(
-          builder: ((_) => DetailsScreen(
+          builder: ((_) => const DetailsScreen(
                 isFavorite: false,
               )));
 
